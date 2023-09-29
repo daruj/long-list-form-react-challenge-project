@@ -13,5 +13,4 @@ if (rootElement) {
   );
 } else {
   console.error('You should add a root element in your html file');
-  console.log('hey');
 }
