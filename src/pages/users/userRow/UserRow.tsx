@@ -14,7 +14,7 @@ interface UserRowProps {
 const UserRow: React.FC<UserRowProps> = ({ user }) => {
   return (
     <Grid container className={styles.userRow}>
-      <Grid xs={11}>
+      <Grid item xs={11}>
         <Grid container>
           <Grid item xs={3} padding={1}>
             <InputField
@@ -45,7 +45,7 @@ const UserRow: React.FC<UserRowProps> = ({ user }) => {
           </Grid>
         </Grid>
       </Grid>
-      <Grid xs={1}>
+      <Grid item xs={1}>
         <TrashIconButton />
       </Grid>
     </Grid>
