@@ -13,8 +13,8 @@ interface InputFieldProps {
   name: string;
   value: string;
   onChangeHandler(name: string, value: string): void;
-  error: boolean;
-  disabled: boolean;
+  error?: boolean;
+  disabled?: boolean;
   placeholder: string;
 }
 
@@ -43,16 +43,6 @@ const InputField: React.FC<InputFieldProps> = ({
       }}
     />
   );
-};
-
-// TODO: Implement passed props
-InputField.defaultProps = {
-  name: 'text_field_name',
-  value: '',
-  onChangeHandler: () => {},
-  error: false,
-  disabled: false,
-  placeholder: '',
 };
 
 export default InputField;
