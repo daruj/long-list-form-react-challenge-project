@@ -14,7 +14,12 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "baseUrl": ".", // This should be the root of your project
+    "paths": {
+      "@src/*": ["./src/*"]
+    },
+    "types": ["node", "vite/client"]
   },
   "include": ["src"],
   "exclude": ["node_modules"],

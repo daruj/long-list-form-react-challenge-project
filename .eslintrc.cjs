@@ -24,6 +24,9 @@ module.exports = {
         paths: ['src'],
         extensions: ['.js', '.jsx', '.ts', '.tsx'],
       },
+      typescript: {
+        alwaysTryTypes: true, // Ensure that both .ts and .d.ts files are considered
+      },
     },
   },
   plugins: ['react-refresh'],
