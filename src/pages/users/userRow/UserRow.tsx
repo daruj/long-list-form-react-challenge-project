@@ -38,7 +38,14 @@ const UserRow: React.FC<UserRowProps> = ({ user }) => {
   });
 
   const handleRemove = () => {
-    handleRemoveUserMutation.mutate(user.id);
+    // if the user is not stored yet, then we just want to remove it from the list
+    if (user.id.startsWith('temp_')) {
+      queryClient.setQueryData<User[]>('users', (prevItems) => {
+        return prevItems?.filter((item) => item.id !== user.id) || [];
+      });
+    } else {
+      handleRemoveUserMutation.mutate(user.id);
+    }
   };
 
   return (

@@ -10,7 +10,7 @@ export const fetchUsers = async (): Promise<User[]> => {
 
   const data: User[] = await response.json();
 
-  return data;
+  return data.reverse();
 };
 
 export const removeUser = async (userId: string): Promise<User> => {
