@@ -13,7 +13,12 @@ const StyledAddButton = styled(Button)({
   },
 });
 
-const AddButton = ({ disabled, handleClick }) => {
+interface AddButtonProps {
+  disabled: boolean;
+  handleClick(): void;
+}
+
+const AddButton: React.FC<AddButtonProps> = ({ disabled, handleClick }) => {
   return (
     <StyledAddButton variant="contained" disabled={disabled} onClick={handleClick}>
       <AddIcon fontSize="inherit" />

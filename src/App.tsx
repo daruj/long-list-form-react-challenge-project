@@ -10,7 +10,7 @@ function App() {
       <NavBar />
       <ContextProvider>
         <Routes>
-          <Route path="/" exact element={<StatisticsPage />} />
+          <Route path="/" caseSensitive element={<StatisticsPage />} />
           <Route path="users" element={<UsersPage />} />
         </Routes>
       </ContextProvider>

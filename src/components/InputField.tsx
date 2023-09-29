@@ -1,5 +1,6 @@
 import { styled } from '@mui/material/styles';
 import { TextField } from '@mui/material';
+import React from 'react';
 
 const StyledTextField = styled(TextField)({
   boxShadow: 'none',
@@ -8,7 +9,23 @@ const StyledTextField = styled(TextField)({
   borderRadius: '4px',
 });
 
-const InputField = ({ name, value, onChangeHandler, error, disabled, placeholder }) => {
+interface InputFieldProps {
+  name: string;
+  value: string;
+  onChangeHandler(name: string, value: string): void;
+  error: boolean;
+  disabled: boolean;
+  placeholder: string;
+}
+
+const InputField: React.FC<InputFieldProps> = ({
+  name,
+  value,
+  onChangeHandler,
+  error,
+  disabled,
+  placeholder,
+}) => {
   return (
     <StyledTextField
       name={name}
