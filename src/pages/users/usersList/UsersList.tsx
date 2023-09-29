@@ -13,7 +13,7 @@ const UsersList: React.FC<UsersListProps> = ({ list: usersData }) => {
   return (
     <div className={styles.usersList}>
       <div className={styles.usersListHeader}>
-        <Typography variant="h6">Users List</Typography>
+        <Typography variant="h6">Users List ({usersData.length})</Typography>
         <AddButton disabled={false} handleClick={() => null} />
       </div>
       <div className={styles.usersListContent}>
