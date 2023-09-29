@@ -1,4 +1,4 @@
-const AutocompleteField = (props) => {
+const AutocompleteField = () => {
   return <></>;
 };
 

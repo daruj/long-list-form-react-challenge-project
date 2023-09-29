@@ -11,7 +11,7 @@ const UsersContext = createContext({
 // value provider
 export const ContextProvider = ({ children }) => {
   const [usersData, setUsersData] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   console.log('usersData', usersData);
 
