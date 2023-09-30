@@ -6,11 +6,19 @@ import ContentContainer from '@src/components/ContentContainer';
 import { StatisticPieChart } from '@src/components/StatisticPieChart';
 import React from 'react';
 import { countUsersByCountry } from '@src/utils/countries.utils';
+import { User } from '../../entities/user';
 
 function UsersPage() {
   const { data, isSuccess, isError, isLoading, refetch } = useQuery('users', fetchUsers, {
     refetchOnWindowFocus: false,
-    select: React.useCallback(countUsersByCountry, []),
+    select: React.useCallback(
+      (users: User[]) => ({
+        users,
+        amountOfUsers: users.length,
+        statistics: countUsersByCountry(users),
+      }),
+      []
+    ),
   });
 
   const handleRefetch = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -41,7 +49,11 @@ function UsersPage() {
   if (isSuccess && data) {
     return (
       <ContentContainer>
-        <StatisticPieChart data={data} />
+        {data.amountOfUsers ? (
+          <StatisticPieChart data={data.statistics} />
+        ) : (
+          <div>We did not find any data to display in the chart</div>
+        )}
       </ContentContainer>
     );
   }
