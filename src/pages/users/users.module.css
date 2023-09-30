@@ -21,7 +21,7 @@
 
 .usersListContent {
   overflow: auto;
-  height: calc(100% - 96px);
+  height: calc(100% - 106px);
   padding: 20px 25px;
 }
 

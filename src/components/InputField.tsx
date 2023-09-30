@@ -29,7 +29,7 @@ const InputField: React.FC<InputFieldProps> = ({
   return (
     <StyledTextField
       name={name}
-      value={value}
+      defaultValue={value}
       onChange={(e) => onChangeHandler(e.target.name, e.target.value)}
       error={error}
       disabled={disabled}
