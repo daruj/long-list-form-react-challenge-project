@@ -8,16 +8,20 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ContentContainer from '@src/components/ContentContainer';
 
 function UsersPage() {
-  const { data, isSuccess, isError, isLoading, refetch } = useQuery('users', fetchUsers, {
-    refetchOnWindowFocus: false,
-  });
+  const { data, isSuccess, isError, isLoading, isFetching, refetch } = useQuery(
+    'users',
+    fetchUsers,
+    {
+      refetchOnWindowFocus: false,
+    }
+  );
 
   const handleRefetch = (event: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
     event.preventDefault();
     refetch();
   };
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <ContentContainer>
         <CircularProgress />
