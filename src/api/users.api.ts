@@ -24,3 +24,28 @@ export const removeUser = async (userId: string): Promise<User> => {
 
   return data;
 };
+
+export const updateUser = async ({
+  userId,
+  body,
+}: {
+  userId: string;
+  body: Omit<User, 'id'>;
+}): Promise<User> => {
+  const response = await fetch(`${API_URL}/users/${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      // Add any other headers your API may require
+    },
+    body: JSON.stringify(body),
+  });
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  const data: User = await response.json();
+
+  return data;
+};
