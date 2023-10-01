@@ -18,6 +18,7 @@ interface UserRowProps {
 }
 
 const UserRow: React.FC<UserRowProps> = ({ user }) => {
+  const isNew = user.id.startsWith('temp_');
   const {
     editMode,
     errors,
@@ -28,7 +29,7 @@ const UserRow: React.FC<UserRowProps> = ({ user }) => {
     onSubmit,
     register,
     toggleEditMode,
-  } = useEditUser(user);
+  } = useEditUser(user, isNew);
   return (
     <Grid
       container

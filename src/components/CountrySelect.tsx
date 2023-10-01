@@ -38,8 +38,12 @@ const CountrySelect: React.FC<CountrySelectProps> = ({
           />
         );
       }}
-      onChange={(_, values) => onChange(values)}
-      value={value}
+      onChange={(_, values) => {
+        if (values !== null) onChange(values);
+      }}
+      freeSolo
+      isOptionEqualToValue={(option, value) => option === value}
+      value={value || null}
     />
   );
 };

@@ -49,3 +49,27 @@ export const updateUser = async ({
 
   return data;
 };
+
+export const createUser = async (body: User): Promise<User> => {
+  const response = await fetch(`${API_URL}/users`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      // Add any other headers your API may require
+    },
+    body: JSON.stringify({
+      name: body.name,
+      email: body.email,
+      country: body.country,
+      phone: body.phone,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+
+  const data: User = await response.json();
+
+  return data;
+};
