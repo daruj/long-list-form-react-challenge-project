@@ -12,13 +12,7 @@ const ContentContainer: React.FC<ContentContainerProps> = ({ children }) => {
       padding="30px"
       height="calc(100vh - 150px)"
     >
-      <Box
-        width={1024}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="space-between"
-      >
+      <Box width={1024} display="flex" flexDirection="column" alignItems="center">
         {children}
       </Box>
     </Box>
