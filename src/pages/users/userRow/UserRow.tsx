@@ -1,88 +1,113 @@
-import { Grid } from '@mui/material';
-import InputField from '@src/components/InputField';
+import { Grid, Typography } from '@mui/material';
 import TrashIconButton from '@src/components/TrashIconButton';
-
 import styles from '../users.module.css';
 import type { User } from '@src/entities/user';
 import React from 'react';
+import countryOptions from '@src/data/countries.json';
+import EditIconButton from '@src/components/EditIconButton';
+import CheckIconButton from '@src/components/CheckIconButton';
+import CancelIconButton from '@src/components/CancelIconButton';
+import { escapeRegExp } from '@src/utils/regex.utils';
+import { useEditUser } from '@src/hooks/use-edit-user';
 import CountrySelect from '@src/components/CountrySelect';
-import { useMutation, useQueryClient } from 'react-query';
-import { removeUser } from '@src/api/users.api';
+import { Controller } from 'react-hook-form';
+import { StyledTextField } from '@src/components/InputField';
 
 interface UserRowProps {
   user: User;
 }
 
 const UserRow: React.FC<UserRowProps> = ({ user }) => {
-  const queryClient = useQueryClient();
-  const handleRemoveUserMutation = useMutation({
-    mutationFn: removeUser,
-
-    onMutate: async (itemId) => {
-      // Store the current list of items in case the mutation fails
-      await queryClient.cancelQueries('users'); // Cancel the list query to prevent a race condition
-      const previousItems = queryClient.getQueryData<User[]>('users');
-
-      // Optimistically remove the item from the list if previousItems is defined
-      queryClient.setQueryData<User[]>('users', (prevItems) => {
-        return prevItems?.filter((item) => item.id !== itemId) || [];
-      });
-
-      return { previousItems };
-    },
-    onError: (error, variables, context) => {
-      // If the mutation fails, revert to the previous list of items
-      const previousItems = context?.previousItems || [];
-      queryClient.setQueryData('users', previousItems);
-    },
-  });
-
-  const handleRemove = () => {
-    // if the user is not stored yet, then we just want to remove it from the list
-    if (user.id.startsWith('temp_')) {
-      queryClient.setQueryData<User[]>('users', (prevItems) => {
-        return prevItems?.filter((item) => item.id !== user.id) || [];
-      });
-    } else {
-      handleRemoveUserMutation.mutate(user.id);
-    }
-  };
-
+  const {
+    editMode,
+    errors,
+    control,
+    handleEscapeKey,
+    handleRemove,
+    handleSubmit,
+    onSubmit,
+    register,
+    toggleEditMode,
+  } = useEditUser(user);
   return (
-    <Grid container className={styles.userRow}>
-      <Grid item xs={11}>
+    <Grid
+      container
+      className={styles.userRow}
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+    >
+      <Grid item xs={10}>
         <Grid container>
           <Grid item xs={3} padding={1}>
-            <InputField
-              placeholder="Enter the name..."
-              name="name"
-              value={user.name}
-              onChangeHandler={() => {}}
-            />
+            {(editMode && (
+              <StyledTextField
+                placeholder="Enter the name..."
+                onKeyDown={handleEscapeKey}
+                {...register('name', { required: true })}
+                error={!!errors.name}
+              />
+            )) || <Typography>{user.name}</Typography>}
           </Grid>
           <Grid item xs={3} padding={1}>
-            <InputField
-              placeholder="Enter the email..."
-              name="email"
-              value={user.email}
-              onChangeHandler={() => {}}
-            />
+            {(editMode && (
+              <StyledTextField
+                placeholder="Enter the email..."
+                onKeyDown={handleEscapeKey}
+                {...register('email', {
+                  required: true,
+                  pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                })}
+                error={!!errors.email}
+              />
+            )) || <Typography>{user.email}</Typography>}
+          </Grid>
+          <Grid item xs={3} padding={1} textAlign="center">
+            {(editMode && (
+              <Controller
+                control={control}
+                rules={{
+                  required: true,
+                  pattern: new RegExp(countryOptions.map(escapeRegExp).join('|')),
+                }}
+                name="country"
+                render={({ field: { onChange, value } }) => (
+                  <CountrySelect
+                    onChange={onChange}
+                    value={value}
+                    error={!!errors.country}
+                    onKeyDown={handleEscapeKey}
+                  />
+                )}
+              />
+            )) || <Typography>{user.country}</Typography>}
           </Grid>
           <Grid item xs={3} padding={1}>
-            <CountrySelect value={user.country} />
-          </Grid>
-          <Grid item xs={3} padding={1}>
-            <InputField
-              placeholder="Enter the phone..."
-              name="phone"
-              value={user.phone}
-              onChangeHandler={() => {}}
-            />
+            {(editMode && (
+              <StyledTextField
+                placeholder="Enter the phone..."
+                onKeyDown={handleEscapeKey}
+                {...register('phone', {
+                  required: true,
+                  pattern: /^\+/,
+                })}
+                error={!!errors.phone}
+              />
+            )) || <Typography>{user.phone}</Typography>}
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={1}>
-        <TrashIconButton onClick={handleRemove} />
+      <Grid item xs={2} display="flex" justifyContent="center">
+        {(!editMode && (
+          <>
+            <EditIconButton onClick={toggleEditMode} />
+            <TrashIconButton onClick={handleRemove} />
+          </>
+        )) || (
+          <>
+            <CheckIconButton type="submit" />
+            <CancelIconButton onClick={toggleEditMode} />
+          </>
+        )}
       </Grid>
     </Grid>
   );

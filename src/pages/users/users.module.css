@@ -1,7 +1,3 @@
-.rightButtonContainer {
-  margin-left: auto;
-}
-
 .usersList {
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -30,6 +26,7 @@
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #ccc;
 }
 
 .userRowInput {

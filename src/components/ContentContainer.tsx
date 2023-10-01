@@ -13,7 +13,7 @@ const ContentContainer: React.FC<ContentContainerProps> = ({ children }) => {
       height="calc(100vh - 150px)"
     >
       <Box
-        width={890}
+        width={1024}
         display="flex"
         flexDirection="column"
         alignItems="center"

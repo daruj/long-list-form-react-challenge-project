@@ -1,6 +1,4 @@
 import UsersList from './usersList/UsersList';
-import PrimaryButton from '../../components/PrimaryButton';
-import styles from './users.module.css';
 import { useQuery } from 'react-query';
 import { fetchUsers } from '@src/api/users.api';
 
@@ -70,12 +68,6 @@ function UsersPage() {
           />
         </Box>
         <UsersList list={isSuccess && data ? data : []} isLoading={isLoading} />
-
-        <div className={styles.rightButtonContainer}>
-          <PrimaryButton disabled={false} handleClick={() => null}>
-            <span>Save</span>
-          </PrimaryButton>
-        </div>
       </>
     </ContentContainer>
   );

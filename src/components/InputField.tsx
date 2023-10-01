@@ -2,7 +2,7 @@ import { styled } from '@mui/material/styles';
 import { TextField } from '@mui/material';
 import React from 'react';
 
-const StyledTextField = styled(TextField)({
+export const StyledTextField = styled(TextField)({
   boxShadow: 'none',
   textTransform: 'none',
   backgroundColor: '#909196',
